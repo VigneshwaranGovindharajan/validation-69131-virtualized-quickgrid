@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="VirtualizedQuickGridValidation.Client/VirtualizedQuickGridValidation.Client.csproj" />
+  <Project Path="VirtualizedQuickGridValidation/VirtualizedQuickGridValidation.csproj" />
+</Solution>

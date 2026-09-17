@@ -1,0 +1,100 @@
+.mode-line {
+    display: flex;
+    gap: 0.5rem 1rem;
+    flex-wrap: wrap;
+}
+
+.control-band {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid #aeb7c2;
+    background: #f4f7f9;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.control-group input[type="number"] {
+    width: 9rem;
+}
+
+.toggles label {
+    margin-right: 1rem;
+}
+
+.status {
+    min-height: 2.75rem;
+    margin: 0.75rem 0;
+    padding: 0.65rem 0.8rem;
+    border-left: 4px solid #087990;
+    background: #eaf6f8;
+}
+
+.grid-viewport {
+    height: 420px;
+    overflow-y: scroll;
+    border: 2px solid #334155;
+    background: white;
+}
+
+.grid-viewport ::deep table {
+    width: 100%;
+}
+
+.grid-viewport ::deep tr {
+    height: 42px;
+    border-bottom: 1px solid #94a3b8;
+}
+
+.grid-viewport ::deep th,
+.grid-viewport ::deep td {
+    padding: 0.45rem 0.75rem;
+}
+
+.offscreen-grid {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+}
+
+.log-section {
+    margin-top: 1.25rem;
+}
+
+.log-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-heading h2 {
+    font-size: 1.25rem;
+}
+
+.provider-log {
+    font-family: Consolas, monospace;
+    font-size: 0.82rem;
+}
+
+.provider-log .canceled td {
+    color: #a61e2d;
+    background: #fff1f2;
+}
+
+@media (max-width: 700px) {
+    .control-group {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .control-group input[type="number"] {
+        width: 100%;
+    }
+}

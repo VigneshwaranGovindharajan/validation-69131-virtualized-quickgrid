@@ -1,0 +1,345 @@
+@implements IAsyncDisposable
+
+<h1>Virtualized QuickGrid</h1>
+<p class="mode-line"><strong>Requested mode:</strong> @ModeLabel <strong>Renderer:</strong> @RendererInfo.Name</p>
+
+<section class="control-band" aria-label="Grid controls">
+    <div class="control-group">
+        <label for="initial-index">Initial row</label>
+        <input id="initial-index" type="number" @bind="initialIndex" />
+        <button class="btn btn-primary" @onclick="LoadGrid">Load grid</button>
+    </div>
+    <div class="control-group">
+        <label for="jump-index">Jump target</label>
+        <input id="jump-index" type="number" @bind="jumpIndex" />
+        <button class="btn btn-primary" @onclick="JumpAsync" disabled="@(!gridLoaded)">Jump to row</button>
+        <button class="btn btn-outline-primary" @onclick="SupersedeNearbyAsync" disabled="@(!gridLoaded)">Supersede nearby</button>
+        <button class="btn btn-outline-primary" @onclick="SupersedeDistantAsync" disabled="@(!gridLoaded)">Supersede distant</button>
+    </div>
+    <div class="control-group">
+        <label for="total-filter">Maximum rows</label>
+        <input id="total-filter" type="number" min="0" max="110000" @bind="maximumRows" />
+        <button class="btn btn-secondary" @onclick="ApplyFilterAsync" disabled="@(!gridLoaded)">Apply filter</button>
+        <label for="provider-delay">Provider delay (ms)</label>
+        <input id="provider-delay" type="number" min="0" max="5000" step="100" @bind="providerDelayMilliseconds" />
+    </div>
+    <div class="control-group toggles">
+        <label><input type="checkbox" @bind="prependTimerEnabled" @bind:after="RestartTimer" /> Prepend every 3 seconds</label>
+        <label><input type="checkbox" @bind="appendTimerEnabled" @bind:after="RestartTimer" /> Append every 3 seconds</label>
+        <button class="btn btn-outline-danger" @onclick="TestNonVirtualizedAsync">Test non-virtualized exception</button>
+    </div>
+</section>
+
+<div class="status" role="status" aria-live="polite">@status</div>
+
+@if (gridLoaded)
+{
+    <div class="grid-viewport" tabindex="0">
+        <QuickGrid @key="gridGeneration"
+                   @ref="grid"
+                   TGridItem="ValidationRow"
+                   ItemsProvider="ProvideRowsAsync"
+                   Virtualize="true"
+                   ItemSize="42"
+                   OverscanCount="5"
+                   InitialItemIndex="initialIndex"
+                   AnchorMode="VirtualizeAnchorMode.Start"
+                   ItemComparer="RowIdentityComparer.Instance"
+                   ItemKey="row => row.StableId">
+            <PropertyColumn Property="row => row.CurrentIndex" Title="Current index">
+                <PlaceholderTemplate Context="placeholder">Placeholder @placeholder.Index</PlaceholderTemplate>
+            </PropertyColumn>
+            <PropertyColumn Property="row => row.StableId" Title="Stable identity">
+                <PlaceholderTemplate Context="placeholder">Placeholder @placeholder.Index</PlaceholderTemplate>
+            </PropertyColumn>
+            <PropertyColumn Property="row => row.Label" Title="Value">
+                <PlaceholderTemplate Context="placeholder">Loading row @placeholder.Index...</PlaceholderTemplate>
+            </PropertyColumn>
+        </QuickGrid>
+    </div>
+}
+
+<div class="offscreen-grid" aria-hidden="true">
+    <QuickGrid @ref="nonVirtualizedGrid" TGridItem="ValidationRow" Items="nonVirtualizedRows">
+        <PropertyColumn Property="row => row.CurrentIndex" />
+    </QuickGrid>
+</div>
+
+<section class="log-section" aria-labelledby="provider-log-heading">
+    <div class="log-heading">
+        <h2 id="provider-log-heading">Provider requests</h2>
+        <div>
+            <button class="btn btn-sm btn-outline-secondary" @onclick="ClearLog">Clear log</button>
+            <button class="btn btn-sm btn-outline-secondary" @onclick="StateHasChanged">Refresh log</button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-sm provider-log">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Interaction</th>
+                    <th>Start</th>
+                    <th>Count</th>
+                    <th>Version</th>
+                    <th>Total</th>
+                    <th>State</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entry in providerLog)
+                {
+                    <tr class="@(entry.State == "Canceled" ? "canceled" : null)">
+                        <td>@entry.Timestamp.ToString("HH:mm:ss.fff")</td>
+                        <td>@entry.Interaction</td>
+                        <td>@entry.StartIndex</td>
+                        <td>@entry.Count</td>
+                        <td>@entry.DataVersion</td>
+                        <td>@entry.TotalCount</td>
+                        <td>@entry.State</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@code {
+    private const int BaseRowCount = 100_000;
+    private const int BatchSize = 5;
+    private readonly List<long> prependedIds = [];
+    private readonly List<ProviderLogEntry> providerLog = [];
+    private readonly IQueryable<ValidationRow> nonVirtualizedRows = new[] { new ValidationRow(0, 0, "Non-virtualized row") }.AsQueryable();
+    private QuickGrid<ValidationRow>? grid;
+    private QuickGrid<ValidationRow>? nonVirtualizedGrid;
+    private CancellationTokenSource? timerCancellation;
+    private int initialIndex;
+    private int jumpIndex = 50_000;
+    private int maximumRows = 110_000;
+    private int filteredTotal = BaseRowCount;
+    private int providerDelayMilliseconds = 800;
+    private int appendedCount;
+    private int dataVersion;
+    private int gridGeneration;
+    private long nextPrependedId = -1;
+    private bool gridLoaded;
+    private bool prependTimerEnabled;
+    private bool appendTimerEnabled;
+    private string interaction = "Not loaded";
+    private string status = "Set an initial row, then load the grid.";
+
+    [Parameter]
+    public string ModeLabel { get; set; } = string.Empty;
+
+    private int AvailableRowCount => prependedIds.Count + BaseRowCount + appendedCount;
+
+    private void LoadGrid()
+    {
+        StopTimer();
+        gridLoaded = false;
+        grid = null;
+        gridGeneration++;
+        interaction = $"Initial load ({initialIndex})";
+        status = $"Loading at initial row {initialIndex}.";
+        gridLoaded = true;
+    }
+
+    private async Task JumpAsync()
+    {
+        interaction = $"Jump ({jumpIndex})";
+        await grid!.ScrollToItemAsync(jumpIndex);
+        status = $"Jump to {jumpIndex} settled.";
+    }
+
+    private Task SupersedeNearbyAsync() => SupersedeAsync(25_000, 25_010, "nearby");
+
+    private Task SupersedeDistantAsync() => SupersedeAsync(1_000, 90_000, "distant");
+
+    private async Task SupersedeAsync(int firstTarget, int secondTarget, string kind)
+    {
+        StopTimer();
+        interaction = $"Supersede {kind}: {firstTarget} then {secondTarget}";
+        var firstJump = grid!.ScrollToItemAsync(firstTarget);
+        var secondJump = grid.ScrollToItemAsync(secondTarget);
+        await Task.WhenAll(firstJump, secondJump);
+        status = $"{kind} supersession settled; expected final target {secondTarget}.";
+    }
+
+    private async Task ApplyFilterAsync()
+    {
+        filteredTotal = Math.Clamp(maximumRows, 0, AvailableRowCount);
+        dataVersion++;
+        interaction = $"Filter total ({filteredTotal})";
+        await grid!.RefreshDataAsync();
+        status = $"Filter applied. Provider total is {filteredTotal}.";
+    }
+
+    private async Task TestNonVirtualizedAsync()
+    {
+        try
+        {
+            await nonVirtualizedGrid!.ScrollToItemAsync(0);
+            status = "ERROR: ScrollToItemAsync did not throw with Virtualize disabled.";
+        }
+        catch (InvalidOperationException exception)
+        {
+            status = $"Expected InvalidOperationException: {exception.Message}";
+        }
+    }
+
+    private async ValueTask<GridItemsProviderResult<ValidationRow>> ProvideRowsAsync(GridItemsProviderRequest<ValidationRow> request)
+    {
+        var requestInteraction = interaction;
+        var requestVersion = dataVersion;
+        var total = filteredTotal;
+        var prependedSnapshot = prependedIds.ToArray();
+        var appendedSnapshot = appendedCount;
+        var count = Math.Max(0, Math.Min(request.Count ?? total, total - request.StartIndex));
+
+        AddLog(requestInteraction, request.StartIndex, request.Count, requestVersion, total, "Started");
+
+        try
+        {
+            await Task.Delay(providerDelayMilliseconds, request.CancellationToken);
+
+            var rows = Enumerable.Range(request.StartIndex, count)
+                .Select(index => CreateRow(index, prependedSnapshot, appendedSnapshot))
+                .ToArray();
+
+            AddLog(requestInteraction, request.StartIndex, request.Count, requestVersion, total, "Completed");
+
+            return GridItemsProviderResult.From(items: rows, totalItemCount: total);
+        }
+        catch (OperationCanceledException) when (request.CancellationToken.IsCancellationRequested)
+        {
+            AddLog(requestInteraction, request.StartIndex, request.Count, requestVersion, total, "Canceled");
+
+            throw;
+        }
+    }
+
+    private static ValidationRow CreateRow(int currentIndex, IReadOnlyList<long> prependedSnapshot, int appendedSnapshot)
+    {
+        long stableId;
+
+        if (currentIndex < prependedSnapshot.Count)
+        {
+            stableId = prependedSnapshot[currentIndex];
+        }
+        else
+        {
+            var sourceIndex = currentIndex - prependedSnapshot.Count;
+            stableId = sourceIndex < BaseRowCount
+                ? sourceIndex
+                : BaseRowCount + Math.Min(
+                    sourceIndex - BaseRowCount,
+                    appendedSnapshot - 1);
+        }
+
+        return new ValidationRow(
+            currentIndex,
+            stableId,
+            $"Item {stableId}");
+    }
+
+    private void AddLog(string requestInteraction, int start, int? count, int version, int total, string state)
+    {
+        providerLog.Insert(0, new ProviderLogEntry(DateTime.Now, requestInteraction, start, count, version, total, state));
+
+        if (providerLog.Count > 200)
+        {
+            providerLog.RemoveRange(200, providerLog.Count - 200);
+        }
+    }
+
+    private void RestartTimer()
+    {
+        CancelTimer();
+
+        if (!prependTimerEnabled && !appendTimerEnabled)
+        {
+            return;
+        }
+
+        timerCancellation = new CancellationTokenSource();
+        _ = RunTimerAsync(timerCancellation.Token);
+    }
+
+    private void CancelTimer()
+    {
+        timerCancellation?.Cancel();
+        timerCancellation?.Dispose();
+        timerCancellation = null;
+    }
+
+    private async Task RunTimerAsync(CancellationToken cancellationToken)
+    {
+        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(3));
+        try
+        {
+            while (await timer.WaitForNextTickAsync(cancellationToken))
+            {
+                await InvokeAsync(async () =>
+                {
+                    if (prependTimerEnabled)
+                    {
+                        for (var index = 0; index < BatchSize; index++)
+                        {
+                            prependedIds.Insert(0, nextPrependedId--);
+                        }
+                    }
+
+                    if (appendTimerEnabled)
+                    {
+                        appendedCount += BatchSize;
+                    }
+
+                    dataVersion++;
+                    filteredTotal = Math.Min(maximumRows, AvailableRowCount);
+                    interaction = $"Timer batch (prepend={prependTimerEnabled}, append={appendTimerEnabled})";
+                    await grid!.RefreshDataAsync();
+                    status = $"Data version {dataVersion}; total {filteredTotal}; prepended {prependedIds.Count}; appended {appendedCount}.";
+                    StateHasChanged();
+                });
+            }
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+        }
+    }
+
+    private void StopTimer()
+    {
+        CancelTimer();
+        prependTimerEnabled = false;
+        appendTimerEnabled = false;
+    }
+
+    private void ClearLog() => providerLog.Clear();
+
+    public ValueTask DisposeAsync()
+    {
+        StopTimer();
+        return ValueTask.CompletedTask;
+    }
+
+    private sealed record ValidationRow(int CurrentIndex, long StableId, string Label);
+
+    private sealed class RowIdentityComparer : IEqualityComparer<ValidationRow>
+    {
+        public static RowIdentityComparer Instance { get; } = new();
+
+        public bool Equals(ValidationRow? first, ValidationRow? second) => first?.StableId == second?.StableId;
+
+        public int GetHashCode(ValidationRow row) => row.StableId.GetHashCode();
+    }
+
+    private sealed record ProviderLogEntry(
+        DateTime Timestamp,
+        string Interaction,
+        int StartIndex,
+        int? Count,
+        int DataVersion,
+        int TotalCount,
+        string State);
+}
