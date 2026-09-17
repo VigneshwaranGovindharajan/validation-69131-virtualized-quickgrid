@@ -1,4 +1,5 @@
 @implements IAsyncDisposable
+@inject ILogger<QuickGridValidationHarness> Logger
 
 <h1>Virtualized QuickGrid</h1>
 <p class="mode-line"><strong>Requested mode:</strong> @ModeLabel <strong>Renderer:</strong> @RendererInfo.Name</p>
@@ -135,6 +136,7 @@
 
     private void LoadGrid()
     {
+        LogAction("START", $"Initial load ({initialIndex})");
         StopTimer();
         gridLoaded = false;
         grid = null;
@@ -142,13 +144,16 @@
         interaction = $"Initial load ({initialIndex})";
         status = $"Loading at initial row {initialIndex}.";
         gridLoaded = true;
+        LogAction("END", interaction);
     }
 
     private async Task JumpAsync()
     {
         interaction = $"Jump ({jumpIndex})";
+        LogAction("START", interaction);
         await grid!.ScrollToItemAsync(jumpIndex);
         status = $"Jump to {jumpIndex} settled.";
+        LogAction("END", interaction);
     }
 
     private Task SupersedeNearbyAsync() => SupersedeAsync(25_000, 25_010, "nearby");
@@ -159,10 +164,12 @@
     {
         StopTimer();
         interaction = $"Supersede {kind}: {firstTarget} then {secondTarget}";
+        LogAction("START", interaction);
         var firstJump = grid!.ScrollToItemAsync(firstTarget);
         var secondJump = grid.ScrollToItemAsync(secondTarget);
         await Task.WhenAll(firstJump, secondJump);
         status = $"{kind} supersession settled; expected final target {secondTarget}.";
+        LogAction("END", interaction);
     }
 
     private async Task ApplyFilterAsync()
@@ -170,20 +177,37 @@
         filteredTotal = Math.Clamp(maximumRows, 0, AvailableRowCount);
         dataVersion++;
         interaction = $"Filter total ({filteredTotal})";
+        LogAction("START", interaction);
         await grid!.RefreshDataAsync();
         status = $"Filter applied. Provider total is {filteredTotal}.";
+        LogAction("END", interaction);
     }
 
     private async Task TestNonVirtualizedAsync()
     {
+        const string action = "Non-virtualized ScrollToItemAsync";
+        LogAction("START", action);
+
         try
         {
             await nonVirtualizedGrid!.ScrollToItemAsync(0);
             status = "ERROR: ScrollToItemAsync did not throw with Virtualize disabled.";
+            Logger.LogError(
+                "ACTION FAILED: {Action}; Mode={Mode}; Renderer={Renderer}; Expected InvalidOperationException was not thrown",
+                action,
+                ModeLabel,
+                RendererInfo.Name);
         }
         catch (InvalidOperationException exception)
         {
             status = $"Expected InvalidOperationException: {exception.Message}";
+            Logger.LogInformation(
+                "ACTION END: {Action}; Mode={Mode}; Renderer={Renderer}; ExpectedException={ExceptionType}; Message={Message}",
+                action,
+                ModeLabel,
+                RendererInfo.Name,
+                exception.GetType().Name,
+                exception.Message);
         }
     }
 
@@ -245,6 +269,16 @@
     private void AddLog(string requestInteraction, int start, int? count, int version, int total, string state)
     {
         providerLog.Insert(0, new ProviderLogEntry(DateTime.Now, requestInteraction, start, count, version, total, state));
+        Logger.LogInformation(
+            "PROVIDER {State}: Start={Start}; Count={Count}; Version={Version}; Total={Total}; Interaction={Interaction}; Mode={Mode}; Renderer={Renderer}",
+            state,
+            start,
+            count,
+            version,
+            total,
+            requestInteraction,
+            ModeLabel,
+            RendererInfo.Name);
 
         if (providerLog.Count > 200)
         {
@@ -297,8 +331,24 @@
                     dataVersion++;
                     filteredTotal = Math.Min(maximumRows, AvailableRowCount);
                     interaction = $"Timer batch (prepend={prependTimerEnabled}, append={appendTimerEnabled})";
+                    Logger.LogInformation(
+                        "TIMER BATCH START: Version={Version}; Prepend={Prepend}; Append={Append}; Total={Total}; Mode={Mode}; Renderer={Renderer}",
+                        dataVersion,
+                        prependTimerEnabled,
+                        appendTimerEnabled,
+                        filteredTotal,
+                        ModeLabel,
+                        RendererInfo.Name);
                     await grid!.RefreshDataAsync();
                     status = $"Data version {dataVersion}; total {filteredTotal}; prepended {prependedIds.Count}; appended {appendedCount}.";
+                    Logger.LogInformation(
+                        "TIMER BATCH END: Version={Version}; Prepend={Prepend}; Append={Append}; Total={Total}; Mode={Mode}; Renderer={Renderer}",
+                        dataVersion,
+                        prependTimerEnabled,
+                        appendTimerEnabled,
+                        filteredTotal,
+                        ModeLabel,
+                        RendererInfo.Name);
                     StateHasChanged();
                 });
             }
@@ -316,6 +366,16 @@
     }
 
     private void ClearLog() => providerLog.Clear();
+
+    private void LogAction(string phase, string action)
+    {
+        Logger.LogInformation(
+            "ACTION {Phase}: {Action}; Mode={Mode}; Renderer={Renderer}",
+            phase,
+            action,
+            ModeLabel,
+            RendererInfo.Name);
+    }
 
     public ValueTask DisposeAsync()
     {

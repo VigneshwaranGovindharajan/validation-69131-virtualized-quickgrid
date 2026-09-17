@@ -32,6 +32,8 @@ The sample uses a virtualized QuickGrid with 100,000 generated rows and a delaye
 - Provider request logging
 - Non-virtualized scrolling exception validation
 
+Validation approach: This is a manual validation harness. Status messages describe completed actions but are not automated assertions. Results were determined from viewport measurements, rendered output, provider logs, browser console and host logs, and screen recordings.
+
 ## How to run
 
 ```powershell

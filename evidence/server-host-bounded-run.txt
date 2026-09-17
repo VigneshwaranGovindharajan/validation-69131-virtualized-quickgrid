@@ -1,0 +1,186 @@
+Using launch settings from src\VirtualizedQuickGridValidation\VirtualizedQuickGridValidation\Properties\launchSettings.json...
+Building...
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: https://localhost:7118
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5082
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: D:\Validation-scenarios\validation-69131-virtualized-quickgrid\src\VirtualizedQuickGridValidation\VirtualizedQuickGridValidation
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION START: Initial load (0); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION END: Initial load (0); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=0; Count=23; Version=0; Total=100000; Interaction=Initial load (0); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=0; Count=23; Version=0; Total=100000; Interaction=Initial load (0); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION START: Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=49995; Count=23; Version=0; Total=100000; Interaction=Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=49995; Count=23; Version=0; Total=100000; Interaction=Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION END: Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=49995; Count=23; Version=0; Total=100000; Interaction=Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=49995; Count=23; Version=0; Total=100000; Interaction=Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION START: Supersede nearby: 25000 then 25010; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=25005; Count=23; Version=0; Total=100000; Interaction=Supersede nearby: 25000 then 25010; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=25005; Count=23; Version=0; Total=100000; Interaction=Supersede nearby: 25000 then 25010; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION END: Supersede nearby: 25000 then 25010; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=25005; Count=23; Version=0; Total=100000; Interaction=Supersede nearby: 25000 then 25010; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=25005; Count=23; Version=0; Total=100000; Interaction=Supersede nearby: 25000 then 25010; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION START: Supersede distant: 1000 then 90000; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=89995; Count=23; Version=0; Total=100000; Interaction=Supersede distant: 1000 then 90000; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=89995; Count=23; Version=0; Total=100000; Interaction=Supersede distant: 1000 then 90000; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION END: Supersede distant: 1000 then 90000; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=89995; Count=23; Version=0; Total=100000; Interaction=Supersede distant: 1000 then 90000; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=89995; Count=23; Version=0; Total=100000; Interaction=Supersede distant: 1000 then 90000; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION START: Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=49995; Count=23; Version=0; Total=100000; Interaction=Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=49995; Count=23; Version=0; Total=100000; Interaction=Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION END: Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=49995; Count=23; Version=0; Total=100000; Interaction=Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=49995; Count=23; Version=0; Total=100000; Interaction=Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=49995; Count=23; Version=0; Total=100000; Interaction=Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=49995; Count=23; Version=0; Total=100000; Interaction=Jump (50000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH START: Version=1; Prepend=True; Append=False; Total=100005; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=49995; Count=23; Version=1; Total=100005; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=49995; Count=23; Version=1; Total=100005; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50000; Count=23; Version=1; Total=100005; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50000; Count=23; Version=1; Total=100005; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH END: Version=1; Prepend=True; Append=False; Total=100005; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50000; Count=23; Version=1; Total=100005; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50000; Count=23; Version=1; Total=100005; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH START: Version=2; Prepend=True; Append=False; Total=100010; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50000; Count=23; Version=2; Total=100010; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50000; Count=23; Version=2; Total=100010; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50005; Count=23; Version=2; Total=100010; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50005; Count=23; Version=2; Total=100010; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH END: Version=2; Prepend=True; Append=False; Total=100010; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50005; Count=23; Version=2; Total=100010; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50005; Count=23; Version=2; Total=100010; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH START: Version=3; Prepend=True; Append=False; Total=100015; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50005; Count=23; Version=3; Total=100015; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50005; Count=23; Version=3; Total=100015; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=3; Total=100015; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50010; Count=23; Version=3; Total=100015; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH END: Version=3; Prepend=True; Append=False; Total=100015; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=3; Total=100015; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50010; Count=23; Version=3; Total=100015; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=3; Total=100015; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50010; Count=23; Version=3; Total=100015; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=3; Total=100015; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50010; Count=23; Version=3; Total=100015; Interaction=Timer batch (prepend=True, append=False); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH START: Version=4; Prepend=False; Append=True; Total=100020; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=4; Total=100020; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50010; Count=23; Version=4; Total=100020; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH END: Version=4; Prepend=False; Append=True; Total=100020; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=4; Total=100020; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50010; Count=23; Version=4; Total=100020; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH START: Version=5; Prepend=False; Append=True; Total=100025; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=5; Total=100025; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50010; Count=23; Version=5; Total=100025; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH END: Version=5; Prepend=False; Append=True; Total=100025; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=5; Total=100025; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50010; Count=23; Version=5; Total=100025; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH START: Version=6; Prepend=False; Append=True; Total=100030; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=6; Total=100030; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50010; Count=23; Version=6; Total=100030; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      TIMER BATCH END: Version=6; Prepend=False; Append=True; Total=100030; Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=6; Total=100030; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Canceled: Start=50010; Count=23; Version=6; Total=100030; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=6; Total=100030; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50010; Count=23; Version=6; Total=100030; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=6; Total=100030; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION START: Filter total (5000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Canceled: Start=50010; Count=23; Version=6; Total=100030; Interaction=Timer batch (prepend=False, append=True); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      ACTION END: Filter total (5000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=50010; Count=23; Version=7; Total=5000; Interaction=Filter total (5000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=50010; Count=23; Version=7; Total=5000; Interaction=Filter total (5000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Started: Start=4977; Count=23; Version=7; Total=5000; Interaction=Filter total (5000); Mode=Interactive Server; Renderer=Server
+info: VirtualizedQuickGridValidation.Client.Shared.QuickGridValidationHarness[0]
+      PROVIDER Completed: Start=4977; Count=23; Version=7; Total=5000; Interaction=Filter total (5000); Mode=Interactive Server; Renderer=Server
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
